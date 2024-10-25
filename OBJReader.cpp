@@ -66,18 +66,18 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                 }
 
                 if (word == "vn")
-                {
+               
                     ss >> normalXYZ[0] >> normalXYZ[1] >> normalXYZ[2];
 
                     int pt[3];
 
                     for (int i = 0; i < 3; i++)
                     {
-                        auto pair = uniqueMap.find(xyz[i]);
+                        auto pair = uniqueMap.find(normalXYZ[i]);
                         if (pair == uniqueMap.end())
                         {
-                            triangulation.uniqueValues.push_back(xyz[i]);
-                            uniqueMap[xyz[i]] = triangulation.uniqueValues.size() - 1;
+                            triangulation.uniqueValues.push_back(normalXYZ[i]);
+                            uniqueMap[normalXYZ[i]] = triangulation.uniqueValues.size() - 1;
                             pt[i] = triangulation.uniqueValues.size() - 1;
 
                         }
