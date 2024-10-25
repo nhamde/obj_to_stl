@@ -140,7 +140,7 @@
     <ClInclude Include="Triangulation.h" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="cube.obj" />
+    <Text Include="cube_obj.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -23,7 +23,6 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
         
     while (getline(infile, line))
     {
-        cout << line << endl;
         stringstream ss(line);
         string word;
         while (ss >> word)
@@ -50,6 +49,4 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
         }
     }
     }
-    
-    cout << pointIndices.size();
 }

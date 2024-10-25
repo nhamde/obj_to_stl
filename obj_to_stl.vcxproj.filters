@@ -46,8 +46,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="cube.obj">
-      <Filter>Source Files</Filter>
-    </Object>
+    <Text Include="cube_obj.txt" />
   </ItemGroup>
 </Project>
