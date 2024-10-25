@@ -130,12 +130,14 @@
     <ClCompile Include="OBJReader.cpp" />
     <ClCompile Include="obj_to_stl.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="STLWriter.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Triangulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OBJReader.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="STLWriter.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Triangulation.h" />
   </ItemGroup>

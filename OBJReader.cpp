@@ -14,11 +14,13 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
 {
     map<double, int> uniqueMap;
     double xyz[3];
+    double normalXYZ[3];
     string str1;
     string str2;
     string str3;
-    vector<int> pointIndices;
-    vector<Point> oPoints;
+    //vector<int> pointIndices;
+    vector<Point> vertices;
+    vector<Point> normals;
     
 
     ifstream infile(fileName);
@@ -41,6 +43,8 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                 {
                     ss >> xyz[0] >> xyz[1] >> xyz[2];
 
+                    int pt[3];
+
                     for (int i = 0; i < 3; i++)
                     {
                         auto pair = uniqueMap.find(xyz[i]);
@@ -48,38 +52,57 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                         {
                             triangulation.uniqueValues.push_back(xyz[i]);
                             uniqueMap[xyz[i]] = triangulation.uniqueValues.size() - 1;
-                            pointIndices.push_back(triangulation.uniqueValues.size() - 1);
+                            pt[i] = triangulation.uniqueValues.size() - 1;
+                            
                         }
                         else
                         {
-                            pointIndices.push_back(pair->second);
+                            pt[i] = pair->second;
+                            
                         }
+                        
                     }
+                    vertices.push_back(Point(pt[0], pt[1], pt[2]));
                 }
-            }
-            while (ss >> word) {
+
+                if (word == "vn")
+                {
+                    ss >> normalXYZ[0] >> normalXYZ[1] >> normalXYZ[2];
+
+                    int pt[3];
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        auto pair = uniqueMap.find(xyz[i]);
+                        if (pair == uniqueMap.end())
+                        {
+                            triangulation.uniqueValues.push_back(xyz[i]);
+                            uniqueMap[xyz[i]] = triangulation.uniqueValues.size() - 1;
+                            pt[i] = triangulation.uniqueValues.size() - 1;
+
+                        }
+                        else
+                        {
+                            pt[i] = pair->second;
+
+                        }
+
+                    }
+                    normals.push_back(Point(pt[0], pt[1], pt[2]));
+                }
+
                 if (word == "f")
                 {
                     ss >> str1 >> str2 >> str3;
-                    int x = stoi(str1.substr(0, 1)) - 1;
-                    int y = stoi(str2.substr(0, 1)) - 1;
-                    int z = stoi(str3.substr(0, 1)) - 1;
-                    cout << x << y << z;
-                    triangulation.triangles.push_back(Triangle(oPoints[x], oPoints[y], oPoints[z]));
+                    int FirstPointIndex= stoi(str1.substr(0, 1)) - 1;
+                    int SecondPointIndex = stoi(str2.substr(0, 1)) - 1;
+                    int ThirdPointIndex = stoi(str3.substr(0, 1)) - 1;
+                    int normalIndex = stoi(str3.substr(4, 1)) - 1;
+                    cout << FirstPointIndex << SecondPointIndex << ThirdPointIndex << normalIndex << endl;
+                    triangulation.triangles.push_back(Triangle(vertices[FirstPointIndex], vertices[SecondPointIndex], vertices[ThirdPointIndex], normals[normalIndex]));
                 }
-            }
+            }   
         }
-        for (int i = 0; i < pointIndices.size(); i += 3)
-        {
-
-            if (i + 2 < pointIndices.size())
-            {
-                int x = pointIndices[i];
-                int y = pointIndices[i + 1];
-                int z = pointIndices[i + 2];
-
-                oPoints.push_back(Point(x, y, z)); 
-            }
-        }
+        cout << triangulation.triangles.size();
     }
 }
