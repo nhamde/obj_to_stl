@@ -22,9 +22,13 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
     
 
     ifstream infile(fileName);
+    if (!infile.is_open()) {
+        cerr << "Error: Could not open file " << fileName << endl;
+        return;
+    }
     if (infile.is_open())
     {
-        cout << "file is open." << endl;
+
         string line;
 
         while (getline(infile, line))
@@ -51,6 +55,17 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                             pointIndices.push_back(pair->second);
                         }
                     }
+                }
+            }
+            while (ss >> word) {
+                if (word == "f")
+                {
+                    ss >> str1 >> str2 >> str3;
+                    int x = stoi(str1.substr(0, 1)) - 1;
+                    int y = stoi(str2.substr(0, 1)) - 1;
+                    int z = stoi(str3.substr(0, 1)) - 1;
+                    cout << x << y << z;
+                    triangulation.triangles.push_back(Triangle(oPoints[x], oPoints[y], oPoints[z]));
                 }
             }
         }
