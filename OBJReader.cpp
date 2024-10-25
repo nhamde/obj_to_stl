@@ -66,7 +66,7 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                 }
 
                 if (word == "vn")
-               
+                {
                     ss >> normalXYZ[0] >> normalXYZ[1] >> normalXYZ[2];
 
                     int pt[3];
