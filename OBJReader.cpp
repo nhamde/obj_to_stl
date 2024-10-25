@@ -14,6 +14,7 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
 {
     map<double, int> uniqueMap;
     double xyz[3];
+    string fnData[3];
     vector<int> pointIndices;
     vector<Point> oPoints;
 
@@ -47,12 +48,11 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                         }
                     }
                 }
-
-                if (word == "f")
+                else if (word == "f")
                 {
-                    ss >> xyz[0] >> xyz[1] >> xyz[2];
+                    ss >> fnData[0] >> fnData[1] >> fnData[2];
 
-                    cout << xyz[0] << " " << xyz[1] << " " << xyz[2] << endl;
+                    
                 }
             }
         }
@@ -68,6 +68,5 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                 oPoints.push_back(Point(x, y, z)); 
             }
         }
-
     }
 }
