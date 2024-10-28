@@ -6,6 +6,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <cassert>
 #include <map>
 
 using namespace std;
@@ -24,10 +25,7 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
     
 
     ifstream infile(fileName);
-    if (!infile.is_open()) {
-        cerr << "Error: Could not open file " << fileName << endl;
-        return;
-    }
+    assert(infile && "Error: Could not open file");
     if (infile.is_open())
     {
 
@@ -84,9 +82,7 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                         else
                         {
                             pt[i] = pair->second;
-
                         }
-
                     }
                     normals.push_back(Point(pt[0], pt[1], pt[2]));
                 }
@@ -98,11 +94,10 @@ void OBJReader::read(const string& fileName, Triangulation& triangulation)
                     int SecondPointIndex = stoi(str2.substr(0, 1)) - 1;
                     int ThirdPointIndex = stoi(str3.substr(0, 1)) - 1;
                     int normalIndex = stoi(str3.substr(4, 1)) - 1;
-                    cout << FirstPointIndex << SecondPointIndex << ThirdPointIndex << normalIndex << endl;
+                  
                     triangulation.triangles.push_back(Triangle(vertices[FirstPointIndex], vertices[SecondPointIndex], vertices[ThirdPointIndex], normals[normalIndex]));
                 }
             }   
         }
-        cout << triangulation.triangles.size();
     }
 }

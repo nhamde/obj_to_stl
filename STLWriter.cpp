@@ -17,16 +17,17 @@ void STLWriter::write(const std::string& filename, const Triangulation& triangul
 
     if (outfile.is_open())
     {
+        outfile << "solid cube - ascii" << endl;
         for (Triangle tri : triangulation.triangles)
         {
             outfile <<  std::fixed << std::setprecision(6)
-                <<"  facet normal " << formulateText(triangulation, tri.N()) << "\n";
-            outfile << "    outer loop\n";
-            outfile << "      vertex " << formulateText(triangulation, tri.V1());
-            outfile << "      vertex " << formulateText(triangulation, tri.V2());
-            outfile << "      vertex " << formulateText(triangulation, tri.V3());
-            outfile << "    endloop\n";
-            outfile << "  endfacet\n";
+                <<"    facet normal " << formulateText(triangulation, tri.N());
+            outfile << "        outer loop\n";
+            outfile << "            vertex " << formulateText(triangulation, tri.V1());
+            outfile << "            vertex " << formulateText(triangulation, tri.V2());
+            outfile << "            vertex " << formulateText(triangulation, tri.V3());
+            outfile << "        endloop\n";
+            outfile << "    endfacet\n";
         }
     }
 }
